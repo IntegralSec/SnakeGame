@@ -34,7 +34,6 @@ def right():
     player.move_right()
 
 
-
 screen.listen()
 screen.onkeypress(up, 'Up')
 screen.onkeypress(up, 'w')
@@ -82,22 +81,24 @@ def end_game():
     game_running = False
     score_board.game_over()
 
-# Game Loop
-while game_running:
-    player.move()
-    score_board.display_score()
-    screen.update()
-    time.sleep(0.2)
-    if player.head.distance(snack) < 15:
-        player.grow(1)
-        snack.random_move()
-        score_board.increment()
-    # Check for wall collision
-    if wall_collision():
-        end_game()
-    # Check all segments in tail for collision with head
-    if tail_collision():
-        end_game()
+def run_game_loop():
+    # Game Loop
+    while game_running:
+        player.move()
+        score_board.display_score()
+        screen.update()
+        time.sleep(0.2)
+        if player.head.distance(snack) < 15:
+            player.grow(1)
+            snack.random_move()
+            score_board.increment()
+        # Check for wall collision
+        if wall_collision():
+            end_game()
+        # Check all segments in tail for collision with head
+        if tail_collision():
+            end_game()
+    screen.exitonclick()
 
-
-screen.exitonclick()
+if __name__ == "__main__":
+    run_game_loop()
